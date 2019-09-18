@@ -1,16 +1,13 @@
-const FaceTracking = require('FaceTracking');
+
+
+const D = require('Diagnostics');
+const R = require('Reactive');
+const S = require('Shaders');
+const T = require('Time');
+const A = require('Animation');
 const Scene = require('Scene');
-const FaceMesh = require('FaceMesh');
 const Materials = require('Materials');
 const Textures = require('Textures');
-const R = require('Reactive');
-const Animation = require('Animation');
-const D = require('Diagnostics');
-const TouchGestures = require('TouchGestures');
+const FaceTracking = require('FaceTracking');
 const CameraInfo = require('CameraInfo');
-const Patches = require('Patches');
-const Random = require('Random');
-// const DeviceMotion = require('DeviceMotion');
-const Time = require('Time');
 const Instruction = require('Instruction');
-const S = require('Shaders');
