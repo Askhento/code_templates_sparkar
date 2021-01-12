@@ -1,23 +1,24 @@
+const A = require('Animation');
+const Sc = require('Scene');
 
-
-
+// This code need update for async functions!!!
 
 // setting up emitter
 
-const mouthEmitter = Scene.root.find('mouthEmitter');
+const someEmitter = Sc.root.find('someEmitter');
 
 const sizeModifier = A.samplers.easeOutQuad(0, 2);
-mouthEmitter.sizeModifier = sizeModifier;
+someEmitter.sizeModifier = sizeModifier;
 
 const colorsArray = A.samplers.easeOutQuad([0,0,0,0], [0,0,0,1]);
 const alphaSampler = A.samplers.HSVA(colorsArray);
 
-mouthEmitter.colorModulationHSVA = R.HSVA(1,1,1,-1);
-mouthEmitter.hsvaColorModulationModifier = alphaSampler;
+someEmitter.colorModulationHSVA = R.HSVA(1,1,1,-1);
+someEmitter.hsvaColorModulationModifier = alphaSampler;
 
 
 
-// emmit one
+// emmit some particles during 1000 ms
 
 var emitterTimer;
 function emitOne(emmiter){
@@ -30,5 +31,5 @@ function emitOne(emmiter){
 		function(){
 			emitterTimer.unsubscribe();
 			emmiter.birthrate = 0;
-		}, 1200);
+		}, 1000);
 }

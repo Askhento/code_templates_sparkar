@@ -1,7 +1,7 @@
 
 const D = require('Diagnostics');
-const Scene = require('Scene');
-const TouchGestures = require('TouchGestures');
+const Sc = require('Scene');
+const TG = require('TouchGestures');
 
 
 function hideObjects(alist){
@@ -42,7 +42,7 @@ const obj = [];
 for (let i = 0; i < names.length; i++) {
 	obj.push([]);
 	for (var j = 0; j < names[i].length; j++) {
-		obj[i].push(Scene.root.find(names[i][j])); 
+		obj[i].push(Sc.root.find(names[i][j])); 
 	}
 }
 
@@ -50,7 +50,7 @@ for (let i = 0; i < names.length; i++) {
 let tapCount = 0;
 showObjects(obj[tapCount]);
 
-TouchGestures
+TG
 	.onTap()
 	.subscribe(
 		function(){

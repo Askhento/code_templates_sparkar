@@ -4,6 +4,9 @@ const Scene = require('Scene');
 const TouchGestures = require('TouchGestures');
 const R = require('Reactive');
 
+// This code need update for async functions!!!
+
+
 // const container = Scene.root.find('container')
 const planeTracker = Scene.root.find('planeTracker0');
 const box = Scene.root.find('box');

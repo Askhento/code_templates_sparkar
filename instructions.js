@@ -1,21 +1,20 @@
-var instructionTimer;
+// wrapper for INSTRUCTIONS 
+const Instruction = require('Instruction');
+
+let instrucitonTimerSub;
 function setInstruction(time, token){
-
-	if(instructionTimer != null){
-		Time.clearTimeout(instructionTimer);
-	}
-
 	Instruction.bind(true, token);
+
 	if(time != null){
- 	instructionTimer = Time.setTimeout(
-		function(){
-			Instruction.bind(false, token);
-		}, time);
- 	}
+        instrucitonTimerSub = T.setTimeout(
+            () => {
+                Instruction.bind(false, token);				               
+            },
+            time
+        )
+	}
 }
 function clearInstruction(){
-	if(instructionTimer != null){
-		Time.clearTimeout(instructionTimer);
-	}
+	instrucitonTimerSub.unsubscribe();
 	Instruction.bind(false, '');
 }

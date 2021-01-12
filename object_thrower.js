@@ -1,3 +1,5 @@
+// throw some objects on the screen using shuffle bag
+
 
 function knuthShuffle(arr) {
 	var rand, temp, i,last;
