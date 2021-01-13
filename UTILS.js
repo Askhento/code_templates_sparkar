@@ -1,5 +1,5 @@
 const R = require('Reactive');
-
+const D = require('Diagnostics');
 
 export function getRand(low, high){
 	return Math.random()*(high-low) + low;
@@ -12,28 +12,67 @@ export function getRandBool(){
 	return Math.random() >= 0.5;
 }
 
-export function getSign(){
+export function getRandSign(){
 	return Math.round(Math.random()) * 2 - 1;
 }
 
-export function sawToooth(progress, mul = 2){
-	return R.sub(1, R.sub(1, R.mul(mul, progress)).abs());
+export function clamp(num, min, max) {
+	return Math.min(Math.max(num, min), max);
+  };
+
+
+
+export function sawToooth(progress){
+	return R.sub(1, R.sub(1, R.mul(2, progress)).abs());
 }
 
-export function fract(val){
-    return val.sub(val.floor());
+
+export function fractMod(val, mod = 1){
+    return val.sub(val.div(mod).floor().mul(mod));
 }
 
 export function deStep(signal, edge0, edge1){
-    return R.step(signal, edge0).mul(R.step(edge1, signal));
+    return R.add(
+        R.step(signal, edge0),
+        R.step(edge1, signal)
+    ).sub(R.step(edge1, edge0))
 }
 
-export function deSmoothStep(signal, edge0, edge1, delta){
-    return R.mul(
-        R.smoothStep(signal, edge1, R.sub(edge1, delta)),
-        R.smoothStep(signal, edge0, R.add(edge0, delta))
-    );
+export function deSmoothStep(signal, edge0, edge1, delta, mode="mid"){
+    // todo : fix in/out edge case when edges are fliped
+    edge0 = R.val(edge0);
+    edge1 = R.val(edge1);
+    let e0_low, e0_high, e1_low, e1_high, w=delta;
+    switch (mode) {
+        case "mid":
+            w = R.mul(delta, .5);
+            e0_low = edge0.sub(w);
+            e0_high = edge0.add(w);
+            e1_low = edge1.add(w);
+            e1_high = edge1.sub(w);            
+            break;
+        case "out":
+            e0_low = edge0.sub(w);
+            e0_high = edge0;
+            e1_low = edge1.add(w);
+            e1_high = edge1;            
+            break; 
+        case "in":
+            e0_low = edge0;
+            e0_high = edge0.add(w);
+            e1_low = edge1;
+            e1_high = edge1.sub(w);            
+            break;  
+        default:
+            throw 'Wrong mode for deSmoothStep. Options are : mid, out, in'
+    }
+    
+    return R.add(
+        R.smoothStep(signal, e0_low, e0_high),
+        R.smoothStep(signal, e1_low, e1_high)
+    ).sub(R.step(edge1, edge0));
 }
+
 
 // get min/max signal from list of signals 
 
@@ -62,13 +101,7 @@ export function getVertex2MVP2d(){
     return vertex2MVP2d;
 } 
 
-export function clamp(num, min, max) {
-	return Math.min(Math.max(num, min), max);
-  };
 
-export function moduleStep(num, mod = 1){
-	return R.add(R.mod(num, mod), R.step(0, num));
-}
 
 export function rayCastPlane(ray, plane){
     const dotP = R.dot(plane.normal, ray.direction);
