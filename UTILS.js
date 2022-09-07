@@ -2,6 +2,13 @@ const R = require('Reactive');
 const D = require('Diagnostics');
 
 
+/**
+ * 
+ * @param {Reactive type of vector signal like : pack[1,2,3,4], vector, point etc} vector
+ * @param {Array with string keys for object fields} fields 
+ * @param {Num digits after ""."" } numDecimals 
+ * @returns String 
+ */
 export function vecToString(vector, fields, numDecimals = 4) {
     let res = R.val("");
     fields.forEach(field => {
